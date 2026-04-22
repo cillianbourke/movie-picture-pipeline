@@ -188,7 +188,6 @@ resource "aws_iam_role_policy_attachment" "eks_service" {
 ##################
 # Track latest release for the given k8s version
 
-
 resource "aws_eks_node_group" "main" {
   node_group_name = "udacity"
   cluster_name    = aws_eks_cluster.main.name
@@ -203,9 +202,6 @@ resource "aws_eks_node_group" "main" {
     min_size     = 1
   }
 
-
-  # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
-  # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
   depends_on = [
     aws_iam_role_policy_attachment.node_group_policy,
     aws_iam_role_policy_attachment.cni_policy,
@@ -216,6 +212,8 @@ resource "aws_eks_node_group" "main" {
     ignore_changes = [scaling_config.0.desired_size]
   }
 }
+
+
 
 // IAM Configuration
 resource "aws_iam_role" "node_group" {
