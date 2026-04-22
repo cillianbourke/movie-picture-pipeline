@@ -186,8 +186,6 @@ resource "aws_iam_role_policy_attachment" "eks_service" {
 ##################
 # EKS Node Group
 ##################
-# Track latest release for the given k8s version
-
 resource "aws_eks_node_group" "main" {
   node_group_name = "udacity"
   cluster_name    = aws_eks_cluster.main.name
@@ -211,6 +209,8 @@ resource "aws_eks_node_group" "main" {
   lifecycle {
     ignore_changes = [scaling_config.0.desired_size]
   }
+}
+
 }
 
 
@@ -303,7 +303,6 @@ resource "aws_iam_role_policy_attachment" "codebuild" {
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeBuildAdminAccess"
   role       = aws_iam_role.codebuild.name
 }
-
 ####################
 # Github Action role
 ####################
@@ -312,8 +311,8 @@ resource "aws_iam_user" "github_action_user" {
 }
 
 # resource "aws_iam_user_policy" "github_action_user_permission" {
-# user   = aws_iam_user.github_action_user.name
-#  policy = data.aws_iam_policy_document.github_policy.json
+#   user   = aws_iam_user.github_action_user.name
+#   policy = data.aws_iam_policy_document.github_policy.json
 # }
 
 data "aws_iam_policy_document" "github_policy" {
@@ -323,3 +322,5 @@ data "aws_iam_policy_document" "github_policy" {
     resources = ["*"]
   }
 }
+
+
