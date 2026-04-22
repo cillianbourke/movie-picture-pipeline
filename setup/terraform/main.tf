@@ -206,13 +206,14 @@ resource "aws_eks_node_group" "main" {
     aws_iam_role_policy_attachment.ecr_policy,
   ]
 
-  lifecycle {
+   lifecycle {
     ignore_changes = [scaling_config.0.desired_size]
   }
 }
 
-// IAM Configuration
+# IAM Configuration
 resource "aws_iam_role" "node_group" {
+ 
   name               = "udacity-node-group"
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
 }
