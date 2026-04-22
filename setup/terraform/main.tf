@@ -211,10 +211,6 @@ resource "aws_eks_node_group" "main" {
   }
 }
 
-
-
-
-
 // IAM Configuration
 resource "aws_iam_role" "node_group" {
   name               = "udacity-node-group"
